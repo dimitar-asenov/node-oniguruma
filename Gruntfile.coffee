@@ -17,21 +17,6 @@ module.exports = (grunt) ->
       src: ['src/**/*.coffee']
       test: ['spec/**/*.coffee']
 
-    cpplint:
-      files: [
-        'src/**/*.cc'
-        'src/**/*.h'
-      ]
-      reporter: 'spec'
-      verbosity: 1
-      filters:
-        build:
-          include: false
-        legal:
-          copyright: false
-        whitespace:
-          line_length: false
-
     shell:
       rebuild:
         command: 'npm build .'
@@ -50,8 +35,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-shell')
-  grunt.loadNpmTasks('node-cpplint')
-  grunt.registerTask('default', ['lint', 'coffee', 'shell:rebuild'])
+  grunt.registerTask('default', ['coffeelint', 'coffee', 'shell:rebuild'])
   grunt.registerTask('test', ['default', 'shell:test'])
-  grunt.registerTask('lint', ['coffeelint', 'cpplint'])
-  grunt.registerTask('publish', ['coffee', 'lint'])
+  grunt.registerTask('prepublish', ['coffee', 'coffeelint'])
